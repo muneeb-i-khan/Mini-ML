@@ -1,14 +1,5 @@
-import numpy as np
-
-def normalize_features(x):
-    x_mean = np.mean(x)
-    x_std = np.std(x)
-    x_normalized = (x - x_mean) / x_std
-    return x_normalized
-
 def linear_regression(x, y):
-    x_normalized = normalize_features(x)  
-    m = len(x_normalized)  
+    m = len(x)  
 
     w = float(input("Enter the value of w: "))
     b = float(input("Enter the value of b: "))
@@ -18,14 +9,15 @@ def linear_regression(x, y):
         print("Warning: Learning rate is too high. Consider reducing it for a stable convergence.")
 
     try:
-        w, b = gradient_descent(w, b, m, x_normalized, y, alpha)  
+        w, b = gradient_descent(w, b, m, x, y, alpha)  
     except OverflowError:
         print("Overflow error occurred. Try reducing the learning rate or normalizing the input features.")
         return
 
     print("Optimized w:", w)
     print("Optimized b:", b)
-    print("Cost:", calculate_cost(x_normalized, y, m, w, b))  
+    print("Cost:", calculate_cost(x, y, m, w, b))  
+    return w, b
 
 def calculate_cost(x, y, m, w, b):
     cost = 0
